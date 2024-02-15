@@ -1,29 +1,30 @@
-<button id = "rzp-button1">Pay</button>
-		<script src = "https://checkout.razorpay.com/v1/checkout.js"></script>
-		<script>
-			var options = {
-				"key": "key_id",
-				"subscription_id": "sub_00000000000001",
-				"name": "Acme Corp.",
-				"description": "Monthly Test Plan",
-				"image": "/your_logo.jpg",
-				"callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
-				"prefill": {
-					"name": "Gaurav Kumar",
-					"email": "gaurav.kumar@example.com",
-					"contact": "+919876543210"
-				},
-				"notes": {
-					"note_key_1": "Tea. Earl Grey. Hot",
-					"note_key_2": "Make it so."
-				},
-				"theme": {
-					"color": "#F37254"
-				}
-			};
-			var rzp1 = new Razorpay(options);
-			document.getElementById('rzp-button1').onclick = function(e) {
-				rzp1.open();
-				e.preventDefault();
-			}
-			</script>
+<?php
+
+$curl = curl_init();
+
+curl_setopt_array($curl, [
+	CURLOPT_URL => "https://paypaldimasv1.p.rapidapi.com/authorizeOrder",
+	CURLOPT_RETURNTRANSFER => true,
+	CURLOPT_ENCODING => "",
+	CURLOPT_MAXREDIRS => 10,
+	CURLOPT_TIMEOUT => 30,
+	CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+	CURLOPT_CUSTOMREQUEST => "POST",
+	CURLOPT_POSTFIELDS => "orderId=%3CREQUIRED%3E&amount=%3CREQUIRED%3E&accessToken=%3CREQUIRED%3E",
+	CURLOPT_HTTPHEADER => [
+		"X-RapidAPI-Host: PayPaldimasV1.p.rapidapi.com",
+		"X-RapidAPI-Key: 9dfd5a4858mshdab0668358024ebp1fc90bjsn7b19c9cbf2e1",
+		"content-type: application/x-www-form-urlencoded"
+	],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
+
+if ($err) {
+	echo "cURL Error #:" . $err;
+} else {
+	echo $response;
+}
